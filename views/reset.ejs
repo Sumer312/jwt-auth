@@ -1,0 +1,10 @@
+<%- include('partials/header', {isLoggedIn: isLoggedIn}); -%>
+
+<form action="/reset" method="post">
+    <h2>Reset Password</h2>
+    <label for="email">Email</label>
+    <input type="email" name="email">
+    <button>Reset Password</button>
+</form>
+
+<%- include('partials/footer'); -%>

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  app:
+    container_name: docker-node-mongo-jwt
+    restart: always
+    build: .
+    ports:
+      - '3000:3000'
+    # volumes:
+    #   - ./images:/home/sumer/Documents/Projects/Marketplace/images
+    links:
+      - mongo
+  mongo:
+    container_name: mongoDB
+    image: mongo
+    ports:
+      - '27017:27017'
