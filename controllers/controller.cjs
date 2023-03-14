@@ -1,17 +1,19 @@
+require("dotenv").config();
 const User = require("../models/User.cjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-        "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",
-    },
-  })
-);
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+   host: 'smtp.gmail.com',
+   port: 465,
+   secure: true,
+  auth: {
+    user: process.env.USERNAME,
+    pass: process.env.PASSWORD
+  },
+});
 
 const loginGet = (req, res) => {
   const token = req.cookies.jwt;
@@ -79,10 +81,10 @@ const resetPost = (req, res) => {
           return user.save();
         }
       })
-      .then(result => {
-         return transporter.sendMail({
+      .then((result) => {
+        return transporter.sendMail({
           to: email,
-          from: "smoothies@jwtAuth.com",
+          from: process.env.USERNAME,
           subject: "Password reset",
           html: `
           <p>You requested a password reset</p>
